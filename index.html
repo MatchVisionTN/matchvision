@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match Vision</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #07140f;
+      color: white;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 25px 10px;
+    }
+
+    .logo {
+      font-size: 55px;
+    }
+
+    h1 {
+      color: #35d18a;
+      margin: 8px 0;
+    }
+
+    .subtitle {
+      color: #aabbb2;
+    }
+
+    .section-title {
+      margin-top: 25px;
+      font-size: 20px;
+    }
+
+    .match {
+      background: #12251c;
+      border: 1px solid #28523c;
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 15px;
+    }
+
+    .teams {
+      text-align: center;
+      font-size: 19px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .info {
+      color: #b9c9bf;
+      font-size: 14px;
+      margin: 8px 0;
+    }
+
+    .prediction {
+      color: #35d18a;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .free-btn {
+      background: #35d18a;
+      color: #07140f;
+    }
+
+    .extra-btn {
+      background: #263c30;
+      color: white;
+      border: 1px solid #35d18a;
+    }
+
+    .footer {
+      text-align: center;
+      color: #83978b;
+      font-size: 12px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="logo">⚽</div>
+    <h1>MATCH VISION</h1>
+    <div class="subtitle">Smart Football Predictions</div>
+    <div class="subtitle">تحليلات وتوقعات كرة القدم</div>
+  </div>
+
+  <h2 class="section-title">⚽ مباراة مميزة | Featured Match</h2>
+
+  <div class="match">
+    <div class="info">🏆 FREE PREDICTION</div>
+
+    <div class="teams">
+      Team A<br>
+      VS<br>
+      Team B
+    </div>
+
+    <div class="info">📅 Match Date: Coming Soon</div>
+
+    <div class="prediction">
+      🎯 Prediction: Coming Soon
+    </div>
+
+    <button class="free-btn" onclick="showFree()">
+      ⚽ Free Prediction
+    </button>
+  </div>
+
+  <h2 class="section-title">🔒 Extra Analysis</h2>
+
+  <div class="match">
+    <p>تحليل إضافي للمباراة وإحصائيات الفريقين.</p>
+
+    <button class="extra-btn" onclick="showExtra()">
+      🔒 Unlock Extra Analysis
+    </button>
+  </div>
+
+  <div class="footer">
+    Predictions are not guaranteed results.<br>
+    © Match Vision
+  </div>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+
+    function showFree() {
+      tg.showAlert("التوقعات المجانية ستظهر هنا قريباً ⚽");
+    }
+
+    function showExtra() {
+      tg.showAlert("التحليلات الإضافية ستكون متاحة قريباً 🔒");
+    }
+  </script>
+
+</body>
+</html>
