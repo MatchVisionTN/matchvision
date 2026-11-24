@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match Vision</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://libtl.com/sdk.js" data-zone="12332963" data-sdk="show_12332963"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 22px;
+      background: #071b16;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .container { max-width: 520px; margin: auto; }
+    .header { text-align: center; margin: 25px 0; }
+    .logo { font-size: 42px; }
+    h1 { color: #42d392; margin-bottom: 8px; }
+    .subtitle { color: #a8c2b7; }
+    .card {
+      background: #102b23;
+      border: 1px solid #245441;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .teams {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .vs { color: #42d392; }
+    .info { color: #b5c9c0; margin-top: 18px; line-height: 1.8; }
+    .prediction {
+      color: #42d392;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .message {
+      text-align: center;
+      color: #b5c9c0;
+      line-height: 1.8;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 15px;
+      border: 0;
+      border-radius: 10px;
+      background: #27b879;
+      color: #071b16;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      color: #78988a;
+      margin-top: 35px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">⚽</div>
+      <h1>Match Vision</h1>
+      <div class="subtitle">توقعات وتحليلات كرة القدم</div>
+    </header>
+
+    <div class="card" id="match">
+      <p class="message">جاري تحميل آخر التوقعات...</p>
+    </div>
+
+    <footer>Match Vision © 2026</footer>
+  </div>
+
+  <script>
+    const API_URL = "https://matchvision-rqbv.onrender.com/api/matches/latest";
+
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
+    async function loadMatch() {
+      const container = document.getElementById("match");
+
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("API error");
+
+        const data = await response.json();
+
+        if (!data.match) {
+          container.innerHTML =
+            '<p class="message">⚽ لا توجد توقعات منشورة حالياً.<br>ارجع لاحقاً لمتابعة آخر المباريات.</p>';
+          return;
+        }
+
+        const match = data.match;
+
+        container.replaceChildren();
+
+        const teams = document.createElement("div");
+        teams.className = "teams";
+
+        const teamA = document.createElement("span");
+        teamA.textContent = match.team_a;
+
+        const vs = document.createElement("span");
+        vs.className = "vs";
+        vs.textContent = "VS";
+
+        const teamB = document.createElement("span");
+        teamB.textContent = match.team_b;
+
+        teams.append(teamA, vs, teamB);
+        container.appendChild(teams);
+
+        const details = document.createElement("div");
+        details.className = "info";
+
+        const date = document.createElement("p");
+        date.textContent = "📅 موعد المباراة: " + match.match_date;
+
+        const predictionLabel = document.createElement("p");
+        predictionLabel.textContent = "🎯 التوقع:";
+
+        const prediction = document.createElement("p");
+        prediction.className = "prediction";
+        prediction.textContent = match.prediction;
+
+        const analysisLabel = document.createElement("p");
+        analysisLabel.textContent = "📊 التحليل:";
+
+        const analysis = document.createElement("p");
+        analysis.textContent = match.analysis;
+
+        details.append(date, predictionLabel, prediction, analysisLabel, analysis);
+        container.appendChild(details);
+
+      } catch (error) {
+        container.innerHTML =
+          '<p class="message">تعذّر تحميل التوقعات حالياً. حاول مرة أخرى لاحقاً.</p>';
+      }
+    }
+
+    loadMatch();
+  </script>
+</body>
+</html>
